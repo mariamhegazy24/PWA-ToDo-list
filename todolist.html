@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+   <title>to do list</title>
+  
+   <style>
+
+    *{
+      
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      
+    }
+
+    body{
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: rgb(121, 9, 9);
+      margin-bottom: 40px;
+      font-size: 40px;
+    }
+
+    .todolist {
+       
+      max-width: 800px;
+      margin: 0 auto;
+   
+
+     }
+     #inputadd{
+      margin-bottom: 30px;
+     }
+     #taskInput{
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      border: none;
+      border-radius: 5px;
+      width: 60%;
+      padding: 12px;
+      font-size: 18px;
+     }
+
+     button{
+      padding: 12px 24px;
+      background-color: #1e73e8;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-left: 10px;
+     }
+
+    button:hover {
+      background-color: #155fb8;
+    }
+
+    table{
+      width: 100%;
+      font-size: 18px;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th {
+      background-color: darkred;
+      color: white;
+      padding: 12px;
+      border-right: 2px solid white;
+    }
+
+    .done-task {
+    text-decoration: line-through;
+    color: gray;
+             }
+
+    .delete-icon { 
+      cursor:pointer; 
+      font-size:30px; 
+      color:darkred; }
+
+
+   #taskTable tr:hover {
+   background-color: #f2dede;
+  
+     }
+  
+    #taskTable td{
+      border-right: 2px solid white;
+
+
+     }
+
+
+
+    </style>
+
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00bcd4">
+
+</head>
+<body>
+    <div class="todolist">
+     <h1> To Do Organizer </h1>
+     <div id="inputadd">
+        <input id="taskInput" type="text"  placeholder="enter task name" >
+        <button  onclick="addTask()" id="addbtn">Add</button>
+     </div>
+     <table id="taskTable">
+      <tr>
+       <th>Done</th>
+       <th> Task</th>
+       <th>Delete</th>
+
+
+      </tr>
+
+
+
+
+     </table>
+
+
+    </div>
+
+
+
+<script src="todolist.js"></script>
+
+<script>
+  
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.error('SW registration failed', err));
+  }
+
+ 
+  let deferredPrompt;
+  
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'block';
+  });
+
+  installBtn.addEventListener('click', async () => {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User choice: ${outcome}`);
+    deferredPrompt = null;
+    installBtn.style.display = 'none';
+  });
+
+  window.addEventListener('appinstalled', () => {
+    console.log('App installed successfully!');
+  });
+</script>
+
+</body>
+</html>
